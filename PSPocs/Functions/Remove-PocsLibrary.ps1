@@ -24,20 +24,22 @@ function Remove-PocsLibrary {
     [OutputType([System.Object])]
 
     Param(
-        [ValidateSet([ValidatePocsLibStrict])]     
+        [ValidateSet([ValidatePocsLib])]     
         [Parameter(Position=1, ValueFromPipeline=$True, Mandatory=$True, HelpMessage="Name of document and bibliography library.")]
         [System.String] $Name
     )
 
     Process{
 
-        $library_structure = Get-LibraryStructure
+        if ($Name) {
+            $library_structure = Get-LibraryStructure
 
-        # get modified document and bibliography libraries
-        $library_structure.Library.Remove($Name)
-        $library_structure.Source = $library_structure.Library
+            # get modified document and bibliography libraries
+            $library_structure.Library.Remove($Name)
+            $library_structure.Source = $library_structure.Library
 
-        # remove key from literature and document configuration settings and update module structures
-        Update-PocsLibrary -Structure $library_structure -Action "remove"
+            # remove key from literature and document configuration settings and update module structures
+            Update-PocsLibrary -Structure $library_structure -Action "remove"
+        }
     }
 }
