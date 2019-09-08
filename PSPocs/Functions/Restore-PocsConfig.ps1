@@ -26,21 +26,28 @@ function  Restore-PocsConfig {
     )
 
     Process{
-        $history_length = $PSPocs.Logger.Length
+
         # if index is greater than the history array break
-        if ($Index -gt  $history_length - 1) {
+        if ($Index -gt $PSPocs.Logger.Length - 1) {
             return
         }
         
         # backup for restoring literature and document libraries
-        $source = $PSPocs.Logger[$Index].Backup
-        $backup = $PSPocs.Logger[$Index].Source
-        Copy-Item -Path $source -Destination $backup -Force
-        New-ConfigBackup -Source $source -Action "restore"
-        
-        # restore specified file
-        Copy-Item -Path $backup -Destination $destination -Force
-        
-        Write-FormattedSuccess -Message "[CP] $($backup) to $($destination)" -Module $PSPocs.Name
+        $structure = @()
+        $PSPocs.Logger[$Index].Files | ForEach-Object {
+            $structure += @{"Path" = $_["Source"]}
+        }
+        New-ConfigBackup -Structure $structure -Action "restore"
+
+        # restore literature and document config files with specified index
+        $PSPocs.Logger[$Index].Files | ForEach-Object {
+            $source = $_["Backup"]
+            $destination = $_["Source"]
+            Copy-Item -Path $source -Destination $destination -Force
+            Write-FormattedSuccess -Message "[CP] $($source) to $($destination)" -Module $PSPocs.Name
+        }
+
+        # update module structures
+        Get-PocsConfigContent
     }
 }

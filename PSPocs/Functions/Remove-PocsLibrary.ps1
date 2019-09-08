@@ -16,12 +16,12 @@ function Remove-PocsLibrary {
         System.String. Name        
 
     .OUTPUTS
-       None.
+        System.Object.
     #>
 
     [CmdletBinding(PositionalBinding=$True)]
     
-    [OutputType([Void])]
+    [OutputType([System.Object])]
 
     Param(
         [ValidateSet([ValidatePocsLibStrict])]     
@@ -31,8 +31,13 @@ function Remove-PocsLibrary {
 
     Process{
 
+        $library_structure = Get-LibraryStructure
+
+        # get modified document and bibliography libraries
+        $library_structure.Library.Remove($Name)
+        $library_structure.Source = $library_structure.Library
+
         # remove key from literature and document configuration settings and update module structures
-        $PSPocs.ConfigContent.Remove($Name)
-        Update-PocsLibrary -Action "remove"
+        Update-PocsLibrary -Structure $library_structure -Action "remove"
     }
 }

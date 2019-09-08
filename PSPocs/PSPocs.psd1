@@ -13,7 +13,7 @@
 RootModule = "PSPocs.psm1"
 
 # Version number of this module.
-ModuleVersion = "0.1.0"
+ModuleVersion = "0.2.0"
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -31,7 +31,7 @@ CompanyName = ""
 Copyright = "(c) Wolfgang Brandenburger. All rights reserved."
 
 # Description of the functionality provided by this module
-Description = " The module PSPocs is a set of powershell extensions to."
+Description = "The module PSPocs is a set of powershell extensions to papis, a highly extensible command-line based bibliography and document manager."
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = "6.0"

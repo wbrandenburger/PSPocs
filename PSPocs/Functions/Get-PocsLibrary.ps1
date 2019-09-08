@@ -12,8 +12,6 @@ function Get-PocsLibrary {
 
     .PARAMETER Name
 
-    .PARAMETER Full
-
     .INPUTS
         System.String. Name
     
@@ -28,32 +26,24 @@ function Get-PocsLibrary {
     Param(
         [ValidateSet([ValidatePocsSection])]     
         [Parameter(Position=1, ValueFromPipeline=$True, HelpMessage="Name of document and bibliography library.")]
-        [System.String] $Name,
-
-        [Parameter(HelpMessage="Return information specific document and bibliography library settings.")]
-        [Switch] $Full
+        [System.String] $Name
     )
 
     Process{
 
         if ($Name){
             # get specific document and bibliography library
-            $library =  $PSPocs.Library | Where-Object {$_.Name -eq $Name} | Select-Object -ExpandProperty "Content"
-            if ($library.Keys -contains "local-config-file"){
-                if (Test-Path -Path $library["local-config-file"]){
-                    $settings = Get-IniContent -FilePath $library["local-config-file"] -IgnoreComments
-                }
-            }
-            if (-not $Full) {
-                return $library | Format-Table
-            }
-            else {
-                return $library + $settings | Format-Table
-            }
+            return $PSPocs.Library | Where-Object {$_.Name -eq $Name} | Select-Object -ExpandProperty "Content" | Format-Table
         }
         else {
             # get all existing document and bibliography libraries
-             $PSPocs.Library | Select-Object -Property Name, Library | Format-Table
+            return $PSPocs.Library | Format-Table -Property Name, Library, @{
+                Label = "Path"
+                Expression = {if ($_.Library){$_.Content["dir"]} else {$Null}}
+            }, @{
+                Label = "Content"
+                Expression = {$_.Content}
+            }
         }
     }
 }

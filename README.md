@@ -2,24 +2,19 @@
 
 ## Table of Contents
 
-- [PSPocs](#PSPocs)
+- [PSPocs](#pspocs)
   - [Table of Contents](#table-of-contents)
   - [Description](#description)
-    - [Origin](#origin)
   - [Installation](#installation)
   - [Dependencies](#dependencies)
-  - [Settings](#settings)
   - [Available Commands](#available-commands)
   - [Examples](#examples)
-    - [Creating virtual environments](#creating-virtual-environments)
   - [Authors/Contributors](#authorscontributors)
     - [Author](#author)
 
 ## Description
 
-### Origin
-
-This module is an extension of [virtualenvwrapper-powershell](https://github.com/regisf/virtualenvwrapper-powershell) and adds more functionality
+The module PSPocs is a set of powershell extensions to papis, a highly extensible command-line based bibliography and document manager.
 
 ## Installation
 
@@ -34,26 +29,6 @@ Install-Module PSPocs
 The following PowerShell module will be automatically installed:
 
 - [PSIni](https://github.com/lipkau/PsIni)
-
-## Settings
-
-PSPocs creates automatically a configuration file in folder `%USERPRFOFILE%\PSPocs`. Additionally, PSPocs search for configuration directories in environment variable `%XDG_CONFIG_HOME%` and `XDG_CONFIG_DIRS`. In configuration file the working directory of a python distribution and an user defined folder for virtual environment can be specified.
-
-```ini
-[settings]
-
-; default path where virtual environments are located
-venv-work-dir = "A:\VirtualEnv"
-
-; config path of virtual environments
-venv-config-dir =  "A:\VirtualEnv\.config"
-
-; default download path for python packages
-venv-local-dir =  "A:\VirtualEnv\.temp"
-
-; default python distribution
-python = "C:\Python\Python37\python.exe"
-```
 
 ## Available Commands
 
@@ -71,33 +46,6 @@ python = "C:\Python\Python37\python.exe"
 | `Stop-VirtualEnv`        | `stop-venv`  | Stops current running virtual environment.                                                  |
 
 ## Examples
-
-### Creating virtual environments
-
-Creates a virtual environment in the predefined directory and install via a requirements file project related packages. All available requirement files can be accessed by autocompletion.
-
-```log
-  PS C:\> New-VirtualEnv -Name venv -Requirement \requirements.txt
-
-  [PSPocs]::PROCESS: Creating new virtual environment 'venv'.
-  New python executable in C:\Users\User\PSPocs\venv\Scripts\python.exe
-  Installing setuptools, pip, wheel...
-  done.
-
-  [PSPocs]::SUCCESS: Virtual environment 'C:\Users\User\PSPocs\venv' was created.
-
-  [PSPocs]::PROCESS: Try to install missing packages from requirement file 'C:\Users\User\PSPocs\.require\requirements.txt'.
-
-  [PSPocs]::SUCCESS: Packages from requirement file 'C:\Users\User\PSPocs\.require\requirements.txt' were installed.
-
-
-  Name       Version Latest
-  ----       ------- ------
-  package    version
-  pip        19.2.3
-  setuptools 41.2.0
-  wheel      0.33.6
-```
 
 ## Authors/Contributors
 

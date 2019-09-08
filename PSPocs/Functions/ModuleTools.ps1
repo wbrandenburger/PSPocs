@@ -99,7 +99,7 @@ function Get-ActivePocsLib {
 
 #   function ----------------------------------------------------------------
 # ---------------------------------------------------------------------------
-function New-TempPocsConfig {
+function New-TemporaryConfig {
 
     <#
     .DESCRIPTION
@@ -160,12 +160,12 @@ function New-ConfigBackup {
     
     [CmdletBinding(PositionalBinding=$True)]
 
-    [OutputType([System.String])]
+    [OutputType([Void])]
 
     Param(
 
-        [Parameter(HelpMessage="Source.")]
-        [System.String] $Source,
+        [Parameter(Position=1, HelpMessage="Structure of library, containing details about the ocomposition of sections.")]
+        [System.Object] $Structure,
 
         [Parameter(HelpMessage="Performed action for logging purposes.")]
         [System.String] $Action
@@ -173,21 +173,267 @@ function New-ConfigBackup {
     
     Process {
         
-        # create temporary file with content of source
         $logger_length = $PSPocs.Logger.Length
-        $temp_file = New-TemporaryFile -Extension ".ini"
-
-        # copy source to backup location
-        Copy-Item -Path $Source -Destination $temp_file -Force
+        $path_list = @()
+        $Structure | ForEach-Object{
+            # create temporary file with content of source
+            $path = @{
+                "Source" = $_.Path
+                "Backup" = New-TemporaryFile -Extension ".ini"
+            }
+        
+            # copy source to backup location
+            Copy-Item -Path $path.Source -Destination $path.Backup -Force
+            
+            $path_list += $path
+        }
 
         # store information about backup in module logger
         $PSPocs.Logger += [PSCustomObject] @{
             "Id" =  $logger_length
             "Date" = Get-Date -Format "HH:mm:ss MM/dd/yyyy"
             "Action" = $Action
-            "Source" = $Source
-            "Backup" = $temp_file
+            "Files" = $path_list
+
         }
     }
 }
 
+#   function ----------------------------------------------------------------
+# ---------------------------------------------------------------------------
+function Get-LocalConfigContent {
+
+    <#
+    .DESCRIPTION
+       Get local config settings from specified literature and document library.
+
+    .PARAMETER Name
+
+    .OUTPUTS 
+        System.Object. Local configuration file content.
+    #>
+    
+    [CmdletBinding(PositionalBinding=$True)]
+
+    [OutputType([System.Object])]
+
+    Param(
+        [Parameter(HelpMessage="Name of document and bibliography library.")]
+        [System.String] $Name
+    )
+    
+    Process {
+        # get specific document and bibliography library
+        $library = $PSPocs.Library | Where-Object {$_.Name -eq $Name} | Select-Object -ExpandProperty "Content"
+
+        # extract the related local configuration file and return its content
+        $config_file = Get-LocalConfigFile -Library $library
+        if ($config_file){
+            return Get-IniContent -FilePath $config_file -IgnoreComments 
+        }  
+    }
+}
+
+#   function ----------------------------------------------------------------
+# ---------------------------------------------------------------------------
+function Get-LocalConfigFile {
+
+    <#
+    .DESCRIPTION
+       Extract local config file from document and bibliography library settings.
+
+    .PARAMETER Library
+
+    .OUTPUTS 
+        System.String. Local config file of ocument and bibliography library.
+    #>
+    
+    [CmdletBinding(PositionalBinding=$True)]
+
+    [OutputType([System.String])]
+
+    Param(
+        [Parameter(HelpMessage="Literature and document library.")]
+        [System.Object] $Library
+    )
+
+    Process {
+        # extract local config file from document and bibliography library settings
+        $library = $Library
+        if ($library.Keys -contains "local-config-file"){
+            $config_file = $library["local-config-file"]
+
+            # if variable subsitution is enabled, the corresponding pattern '%(variable)'
+            $config_folder = [regex]::Match($library["local-config-file"], "\%\((.+)\)s").captures.groups[1].value
+            if ($config_folder) {
+                # if the pattern is found it has to be replaced with the corresponding path
+                $config_file = $config_file -replace "\%\((.+)\)s",  $library[$config_folder]
+                if (Test-Path -Path $config_file){
+                    return $config_file
+                }
+            }
+        }
+    }
+}
+
+#   function ----------------------------------------------------------------
+# ---------------------------------------------------------------------------
+function Get-LibraryStructure {
+
+    <#
+    .DESCRIPTION
+        Extract Specific document and bibliography library, local configuration file content.
+
+    .PARAMETER Name
+
+    .OUTPUTS 
+        System.Object. Structure of library.
+    #>
+    
+    [CmdletBinding(PositionalBinding=$True)]
+
+    [OutputType([System.Object])]
+
+    Param(
+        [Parameter(HelpMessage="Name of document and bibliography library.")]
+        [System.String] $Name
+    )
+    
+    Process {
+
+        if ($Name) {
+            # get sepcific literature and document library
+            $library = $PSPocs.Library | Where-Object {$_.Name -eq $Name} | Select-Object -ExpandProperty "Content"
+            
+            # create structure of library
+            $structure = @( 
+                [PSCustomObject] @{ 
+                    "Key" = @($Name) 
+                    "Path" = $PSPocs.Config
+                    "Library" = @{ $Name = $library} 
+                    "Source"= $PSPocs.ConfigContent 
+                }
+            )
+
+            # get file path of local literature and document library configuration file and read its content
+            $config_file = Get-LocalConfigFile -Library $library
+            if ($config_file) {
+                $local_library = $(Get-LocalConfigContent -Name $Name)
+
+                # create structure of library
+                $structure += [PSCustomObject] @{ 
+                    "Key" = @($local_library.Keys)
+                    "Path" = $config_file
+                    "Library" = $local_library
+                    "Source" = $local_library
+                }
+            }
+
+            return $structure
+        }
+        else{
+            # get the whole content of general literature and document library configuration file
+            $library = $PSPocs.ConfigContent
+            
+            # create structure of library
+            return  @( 
+                [PSCustomObject] @{ 
+                    "Key" = @($library.Keys)
+                    "Path" = $PSPocs.Config
+                    "Library" = $library
+                    "Source"= $PSPocs.ConfigContent 
+                }
+            )
+        }
+    }
+}
+
+#   function ----------------------------------------------------------------
+# ---------------------------------------------------------------------------
+function Update-LibraryStructure {
+
+    <#
+    .DESCRIPTION
+        Update library structure from content of another library.
+
+    .PARAMETER Library
+
+    .PARAMETER Structure
+
+    .OUTPUTS 
+        System.Object. Structure of library.
+    #>
+    
+    [CmdletBinding(PositionalBinding=$True)]
+
+    [OutputType([System.Object[]])]
+
+    Param(
+        [Parameter(HelpMessage="Literature and document library.")]
+        [System.Object] $Library,
+
+        [Parameter(Position=2, HelpMessage="Structure of library, containing details about the ocomposition of sections.")]
+        [System.Object] $Structure
+    )
+
+    Process {
+
+        # Update library structure from content of reference library.
+        $Structure | ForEach-Object {
+            $structure_library = $_
+            # Update each section of sepcified library structure, which can be found in the reference library
+            for ($i = 0; $i -lt $structure_library.Key.Length; $i++){
+                $key = $structure_library.Key[$i]
+                $structure_library.Library[$key] = $Library[$key]
+                $structure_library.Source[$key] = $Library[$key]
+            }
+        }
+
+        return $Structure
+    }
+}
+
+
+#   function ----------------------------------------------------------------
+# ---------------------------------------------------------------------------
+function Add-LibraryStructure {
+
+    <#
+    .DESCRIPTION
+        Add library to library structure.
+
+    .PARAMETER Library
+
+    .PARAMETER Structure
+
+    .OUTPUTS 
+        System.Object. Structure of library.
+    #>
+    
+    [CmdletBinding(PositionalBinding=$True)]
+
+    [OutputType([System.Object[]])]
+
+    Param(
+        [Parameter(HelpMessage="Literature and document library.")]
+        [System.Object] $Library,
+
+        [Parameter(Position=2, HelpMessage="Structure of library, containing details about the ocomposition of sections.")]
+        [System.Object] $Structure
+    )
+
+    Process {
+
+        # Update library structure from content of reference library.
+        $Structure | ForEach-Object {
+            $structure_library = $_
+            # Update each section of sepcified library structure, which can be found in the reference library
+            foreach ($key in $Library.Keys) {
+                $structure_library.Library[$key] = $Library[$key]
+                $structure_library.Source[$key] = $Library[$key]
+            }
+        }
+
+        return $Structure
+    }
+}

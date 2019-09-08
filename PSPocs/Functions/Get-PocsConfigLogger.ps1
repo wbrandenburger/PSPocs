@@ -22,6 +22,6 @@ function  Get-PocsConfigLogger {
 
     Process{
 
-        return $PSPocs.Logger | Format-Table
+        return $PSPocs.Logger | Format-Table -Property Id, Date, Action, Files
     }
 }

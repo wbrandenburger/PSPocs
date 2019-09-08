@@ -15,7 +15,7 @@ function Update-PocsLibrary {
     .PARAMETER Action
 
     .INPUTS
-        System.Object. Library
+        System.Object. Library.
 
     .OUTPUTS
         None.
@@ -27,31 +27,31 @@ function Update-PocsLibrary {
 
     Param(
 
-        [Parameter(Position=1, ValueFromPipeline=$True, HelpMessage="Literature and document libraries.")]
-        [System.Object] $Library,
+        [Parameter(Position=1, HelpMessage="Structure of library, containing details about the ocomposition of sections.")]
+        [System.Object] $Structure,
 
         [Parameter(HelpMessage="Performed action for logging purposes.")]
         [System.String] $Action
     )
 
     Process{
-        
-        # update module's config content
-        if ($Library) {
-            $Library.Keys | ForEach-Object {
-                $PSPocs.ConfigContent[$_] = $Library[$_]
-            }
-        }
 
         # backup for updating literature and document libraries
-        New-ConfigBackup -Source $PSPocs.Config -Action $Action
+        New-ConfigBackup -Structure $Structure -Action $Action
 
-        # write module config content to literature and document library file
-        $PSPocs.ConfigContent | Out-IniFile -FilePath $PSPocs.Config -Force -Loose -Pretty
+        # backup for updating literature and document libraries
+
+        $Structure | ForEach-Object{
+            
+            # write module config content to literature and document library file
+      
+            $_.Source | Out-IniFile -FilePath $_.Path -Force -Loose -Pretty
+
+        }
+
+        Write-FormattedSuccess -Message "Action $($Action) accomplished " -Module $PSPocs.Name
 
         # update module structures
         Get-PocsConfigContent
-
-        Write-FormattedSuccess -Message "Action $($Action) accomplished " -Module $PSPocs.Name
     } 
 }
