@@ -39,7 +39,7 @@ function ValidatePocsLibrary {
         System.String[]. Virtual environments
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
     
     [OutputType([System.String[]])]
 
@@ -64,7 +64,7 @@ function ValidatePocsConfigSection {
         System.String[]. Virtual environments
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
     
     [OutputType([System.String[]])]
 

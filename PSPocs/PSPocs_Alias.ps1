@@ -12,6 +12,7 @@
     @{ Name = "n-pocs";   Value = "New-PocsLibrary"}
     @{ Name = "rm-pocs";  Value = "Remove-PocsLibrary"}
     @{ Name = "rp-pocs";  Value = "Repair-PocsLibrary"}
+    @{ Name = "sa-lib";  Value = "Start-PocsProcess"}
     @{ Name = "sa-pocs";  Value = "Start-PocsLibrary"}
     @{ Name = "sp-pocs";  Value = "Stop-PocsLibrary"}
     @{ Name = "ud-pocs";  Value = "Update-PocsLibrary"}

@@ -14,7 +14,7 @@ function Update-PocsLibrary {
         None.
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
     
     [OutputType([Void])]
 
@@ -26,18 +26,25 @@ function Update-PocsLibrary {
         $PSPocs.ConfigContent = Get-IniContent -FilePath $PSPocs.Config -IgnoreComments
         
         # general keys of literature and document manager config file, which does not define a library
-        $general_keys = "settings tui"
+        $general_section = "settings tui"
 
         # generate general information
         $PSPocs.Library = @()
         $PSPocs.ConfigContent.Keys  | ForEach-Object {
-            $config_section = $_
+            $section = $_
+            $content = $PSPocs.ConfigContent[$section]
 
             # generate general information for each literature and document librar
+            $virtual_env = $Null
+            if ( $content.Keys -contains "virtual-env") {
+                $virtual_env = $content["virtual-env"]
+            }
+            
             $PSPocs.Library += New-Object -TypeName PSCustomObject -Property @{
-                Name = $config_section
-                Library = $(-not $($general_keys -match $config_section))
-                Content = $PSPocs.ConfigContent[$config_section]
+                Name = $section
+                Content = $content
+                Library = $(-not $($general_section -match $section))
+                VirtualEnv = $virtual_env
             }
         }
     }

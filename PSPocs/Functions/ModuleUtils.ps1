@@ -16,13 +16,16 @@ function Set-PocsLibrary {
         None.
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([Void])]
 
     Param(
         [Parameter(Position=1, HelpMessage="Name of literature and document library.")]
-        [System.String] $Name
+        [System.String] $Name,
+
+        [Parameter(Position=2, ValueFromPipeline, HelpMessage="Name of virtual environment, which should be started.")]
+        [System.String] $VirtualEnv
     )
 
     Process {
@@ -38,6 +41,15 @@ function Set-PocsLibrary {
             #set literature and document manager environment variable
             [System.Environment]::SetEnvironmentVariable($PSPocs.ProjectEnv, $Name,"process")
         }
+
+        # start corresponding virtual environment
+        if ($VirtualEnv -or $PSPocs.Library.VirtualEnv) {
+            $venv = $VirtualEnv
+            if (-not $venv) {
+                $venv = ($PSPocs.Library | Where-Object {$_.Name -eq $Name} | Select-Object -ExpandProperty VirtualEnv)
+            }
+            Set-VirtualEnv -Name $venv
+        }
     }
 }
 
@@ -51,6 +63,7 @@ function Restore-PocsLibrary{
     .OUTPUTS 
         None.
     #>
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([Void])]
 
@@ -81,7 +94,7 @@ function Get-ActivePocsLib {
         System.String. Activated literature and document manager session.
     #>
     
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([System.String])]
 
@@ -116,16 +129,16 @@ function New-TemporaryConfig {
         System.String. Activated literature and document manager session.
     #>
     
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([System.String])]
 
     Param(
 
-        [Parameter(Position=1, ValueFromPipeline=$True, HelpMessage="Literature and document libraries.")]
+        [Parameter(Position=1, ValueFromPipeline, HelpMessage="Literature and document libraries.")]
         [System.Object] $Library,
 
-        [Parameter(Position=1, ValueFromPipeline=$True, HelpMessage="If switch is true, the created file will be opened in system's editor.")]
+        [Parameter(Position=1, ValueFromPipeline, HelpMessage="If switch is true, the created file will be opened in system's editor.")]
         [Switch] $Open
     )
     
@@ -158,7 +171,7 @@ function New-ConfigBackup {
         None. 
     #>
     
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([Void])]
 
@@ -213,7 +226,7 @@ function Get-LocalConfigContent {
         System.Object. Local configuration file content.
     #>
     
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([System.Object])]
 
@@ -248,7 +261,7 @@ function Get-LocalConfigFile {
         System.String. Local config file of ocument and bibliography library.
     #>
     
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([System.String])]
 
@@ -290,7 +303,7 @@ function Get-LibraryStructure {
         System.Object. Structure of library.
     #>
     
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([System.Object])]
 
@@ -364,7 +377,7 @@ function Update-LibraryStructure {
         System.Object. Structure of library.
     #>
     
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([System.Object[]])]
 
@@ -410,7 +423,7 @@ function Add-LibraryStructure {
         System.Object. Structure of library.
     #>
     
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([System.Object[]])]
 
@@ -440,7 +453,7 @@ function Add-LibraryStructure {
 
 #   function ----------------------------------------------------------------
 # ---------------------------------------------------------------------------
-function Update-PocsLibraryFromInputFromInput {
+function Update-PocsLibraryFromInput{
 
     <#
     .DESCRIPTION
@@ -457,7 +470,7 @@ function Update-PocsLibraryFromInputFromInput {
         None.
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
     
     [OutputType([Void])]
 

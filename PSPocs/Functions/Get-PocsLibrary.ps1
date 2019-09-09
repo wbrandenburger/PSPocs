@@ -19,14 +19,17 @@ function Get-PocsLibrary {
         System.object[]. literature and document libraries
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
     
     [OutputType([System.Object])]
 
     Param(
         [ValidateSet([ValidatePocsSection])]     
-        [Parameter(Position=1, ValueFromPipeline=$True, HelpMessage="Name of document and bibliography library.")]
-        [System.String] $Name
+        [Parameter(Position=1, ValueFromPipeline, HelpMessage="Name of document and bibliography library.")]
+        [System.String] $Name,
+
+        [Parameter(ValueFromPipeline, HelpMessage="Name of document and bibliography library.")]
+        [System.String] $Property
     )
 
     Process{
@@ -45,7 +48,17 @@ function Get-PocsLibrary {
                 Expression = {if ($_.Library){$_.Content["dir"]} else {$Null}}
             }, @{
                 Label = "Content"
-                Expression = {$_.Content}
+                Expression = {
+                    if ($Property) {
+                        if ($_.Library){
+                            $_.Content[$Property]
+                        } else {
+                            $Null
+                        }
+                    } else {
+                        $_.Content
+                    }
+                }
             }
         }
     }

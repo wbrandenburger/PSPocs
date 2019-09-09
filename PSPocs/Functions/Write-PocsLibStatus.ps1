@@ -6,7 +6,7 @@
 # ----------------------------------------------------------------------------
 function Write-PocsLibStatus {
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([Void])]
 

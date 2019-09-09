@@ -16,7 +16,7 @@ function  Repair-PocsLibrary {
         None.
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
     
     [OutputType([Void])]
 

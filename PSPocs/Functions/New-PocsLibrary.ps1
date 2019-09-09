@@ -14,7 +14,7 @@ function  New-PocsLibrary {
         None.
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([Void])]
 

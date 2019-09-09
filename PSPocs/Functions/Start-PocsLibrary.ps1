@@ -46,17 +46,17 @@ function Start-PocsLibrary {
         None.
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
 
     [OutputType([Void])]
 
     Param(
         [ValidateSet([ValidatePocsLibStrict])]     
-        [Parameter(Position=1, Mandatory=$True, ValueFromPipeline=$True, HelpMessage="Name of document and bibliography library, which should be started.")]
+        [Parameter(Position=1, Mandatory, ValueFromPipeline, HelpMessage="Name of document and bibliography library, which should be started.")]
         [System.String] $Name,
 
         [ValidateSet([ValidateVirtualEnv])]
-        [Parameter(Position=2, ValueFromPipeline=$True, HelpMessage="Name of virtual environment, which should be started.")]
+        [Parameter(Position=2, ValueFromPipeline, HelpMessage="Name of virtual environment, which should be started.")]
         [System.String] $VirtualEnv,
 
         [Parameter(HelpMessage="If switch 'silent' is true no output will written to host.")]
@@ -72,11 +72,8 @@ function Start-PocsLibrary {
         }
 
         # activate rdocument and bibliography session
-        Set-PocsLibrary -Name $Name
-        if ($VirtualEnv) {
-            Set-VirtualEnv -Name $VirtualEnv
-        }
-        
+        Set-PocsLibrary -Name $Name -VirtualEnv $VirtualEnv
+
         if (-not $Silent) {
             Write-FormattedSuccess -Message "Document and bibliography library '$Name' was started." -Module $PSPocsLib.Name -Space
         }

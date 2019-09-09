@@ -14,7 +14,7 @@ function  Get-PocsLibraryLog {
         System.Object. Literature and document config logger.
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
     
     [OutputType([System.Object])]
 

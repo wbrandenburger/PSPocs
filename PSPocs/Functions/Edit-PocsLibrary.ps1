@@ -19,13 +19,13 @@ function Edit-PocsLibrary {
        None.
     #>
 
-    [CmdletBinding(PositionalBinding=$True)]
+    [CmdletBinding(PositionalBinding)]
     
     [OutputType([Void])]
 
     Param(
         [ValidateSet([ValidatePocsSection])]     
-        [Parameter(Position=1, ValueFromPipeline=$True, HelpMessage="Name of document and bibliography library.")]
+        [Parameter(Position=1, ValueFromPipeline, HelpMessage="Name of document and bibliography library.")]
         [System.String] $Name
     )
 

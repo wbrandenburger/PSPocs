@@ -91,6 +91,7 @@ FunctionsToExport = @(
     "Restore-PocsLibrary",   
     "Remove-PocsLibrary",
     "Set-PocsLibrary",
+    "Start-PocsProcess"
     "Start-PocsLibrary",
     "Stop-PocsLibrary",
     "Update-PocsLibrary",
@@ -114,6 +115,7 @@ AliasesToExport = @(
     "rm-pocs",
     "rp-pocs",
     "sa-pocs",
+    "sa-lib"
     "sp-pocs",
     "ud-pocs"
 )
