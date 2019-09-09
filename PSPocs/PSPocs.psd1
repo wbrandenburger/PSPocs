@@ -55,7 +55,12 @@ PowerShellVersion = "6.0"
 RequiredModules = @(
     @{
         ModuleName = "PSIni"; 
-        ModuleVersion = "3.1.2"; 
+        ModuleVersion = "3.0.0"; 
+    }
+    @{
+        ModuleName = "PSVirtualEnv";
+        ModuleVersion = "0.4.0";
+        GUID = "ca0b4a5a-af4a-416f-a478-e12d116f95b4";
     }
 )
 

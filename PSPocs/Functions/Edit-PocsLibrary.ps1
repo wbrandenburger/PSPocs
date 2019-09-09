@@ -31,6 +31,10 @@ function Edit-PocsLibrary {
 
     Process{
 
+        # update existing literature and document libraries
+        Update-PocsLibrary
+
+        # get specified library and create structure fur further processing
         $library_structure = Get-LibraryStructure -Name $Name
         $library = @{}
         $library_structure  | ForEach-Object {

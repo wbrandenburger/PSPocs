@@ -31,6 +31,9 @@ function Get-PocsLibrary {
 
     Process{
 
+        # update existing literature and document libraries
+        Update-PocsLibrary
+
         if ($Name){
             # get specific document and bibliography library
             return $PSPocs.Library | Where-Object {$_.Name -eq $Name} | Select-Object -ExpandProperty "Content" | Format-Table

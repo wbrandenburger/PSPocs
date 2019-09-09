@@ -22,6 +22,10 @@ function  New-PocsLibrary {
     
     Process {
 
+        # update existing literature and document libraries
+        Update-PocsLibrary
+
+        # get specified library and create structure fur further processing
         $temp_file = New-TemporaryConfig -Library $PSPocs.LibraryDefault -Open
         $library_structure = Get-LibraryStructure
 

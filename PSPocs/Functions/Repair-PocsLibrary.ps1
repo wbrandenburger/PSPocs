@@ -27,6 +27,9 @@ function  Repair-PocsLibrary {
 
     Process{
 
+        # update existing literature and document libraries
+        Update-PocsLibrary
+
         # if index is greater than the history array break
         if ($Index -gt $PSPocs.Logger.Length - 1) {
             return
