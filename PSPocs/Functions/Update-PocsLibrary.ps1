@@ -8,15 +8,8 @@ function Update-PocsLibrary {
 
     <#
     .DESCRIPTION
-        Update existing literature and document libraries   
+        Update content of literature and document file for preprocessing.
     
-    .PARAMETER Library
-
-    .PARAMETER Action
-
-    .INPUTS
-        System.Object. Library.
-
     .OUTPUTS
         None.
     #>
@@ -25,33 +18,27 @@ function Update-PocsLibrary {
     
     [OutputType([Void])]
 
-    Param(
-
-        [Parameter(Position=1, HelpMessage="Structure of library, containing details about the ocomposition of sections.")]
-        [System.Object] $Structure,
-
-        [Parameter(HelpMessage="Performed action for logging purposes.")]
-        [System.String] $Action
-    )
+    Param()
 
     Process{
 
-        # backup for updating literature and document libraries
-        New-ConfigBackup -Structure $Structure -Action $Action
+        # read general literature and document manager config file and add it to main module variable
+        $PSPocs.ConfigContent = Get-IniContent -FilePath $PSPocs.Config -IgnoreComments
+        
+        # general keys of literature and document manager config file, which does not define a library
+        $general_keys = "settings tui"
 
-        # backup for updating literature and document libraries
+        # generate general information
+        $PSPocs.Library = @()
+        $PSPocs.ConfigContent.Keys  | ForEach-Object {
+            $config_section = $_
 
-        $Structure | ForEach-Object{
-            
-            # write module config content to literature and document library file
-      
-            $_.Source | Out-IniFile -FilePath $_.Path -Force -Loose -Pretty
-
+            # generate general information for each literature and document librar
+            $PSPocs.Library += New-Object -TypeName PSCustomObject -Property @{
+                Name = $config_section
+                Library = $(-not $($general_keys -match $config_section))
+                Content = $PSPocs.ConfigContent[$config_section]
+            }
         }
-
-        Write-FormattedSuccess -Message "Action $($Action) accomplished " -Module $PSPocs.Name
-
-        # update module structures
-        Get-PocsConfigContent
-    } 
+    }
 }

@@ -1,10 +1,10 @@
 # ===========================================================================
-#   Add-PocsLibrary.ps1 -----------------------------------------------------
+#   New-PocsLibrary.ps1 -----------------------------------------------------
 # ===========================================================================
 
 #   function ----------------------------------------------------------------
 # ---------------------------------------------------------------------------
-function  Add-PocsLibrary {
+function  New-PocsLibrary {
 
     <#
     .DESCRIPTION
@@ -40,6 +40,6 @@ function  Add-PocsLibrary {
         $library_structure = Add-LibraryStructure -Library $( Get-IniContent -FilePath $temp_file -IgnoreComments) -Structure $library_structure
 
         # add key to literature and document configuration settings and update module structures
-        Update-PocsLibrary -Structure $library_structure -Action "add"
+        Update-PocsLibraryFromInput -Structure $library_structure -Action "add"
     }
 }

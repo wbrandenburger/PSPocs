@@ -6,4 +6,4 @@
 # ---------------------------------------------------------------------------
 
 # get existing literature and document libraries from general config file
-Get-PocsConfigContent
+Update-PocsLibrary

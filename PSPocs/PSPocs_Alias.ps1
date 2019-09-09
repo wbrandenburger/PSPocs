@@ -6,12 +6,15 @@
 # ---------------------------------------------------------------------------
 
 @(
-    @{ Name = "ls-pocs";     Value = "Get-PocsLibrary"}
-    @{ Name = "new-pocs";     Value = "Add-PocsLibrary"}
-    @{ Name = "rm-pocs";     Value = "Remove-PocsLibrary"}
-    @{ Name = "start-pocs";     Value = "Start-PocsLibrary"}
-    @{ Name = "stop-pocs";     Value = "Stop-PocsLibrary"}
-    @{ Name = "vsx-pocs";     Value = "Edit-PocsLibrary"}
+    @{ Name = "ed-pocs";  Value = "Edit-PocsLibrary"}
+    @{ Name = "log-pocs"; Value = "Get-PocsLibraryLog"}
+    @{ Name = "ls-pocs";  Value = "Get-PocsLibrary"}
+    @{ Name = "n-pocs";   Value = "New-PocsLibrary"}
+    @{ Name = "rm-pocs";  Value = "Remove-PocsLibrary"}
+    @{ Name = "rp-pocs";  Value = "Repair-PocsLibrary"}
+    @{ Name = "sa-pocs";  Value = "Start-PocsLibrary"}
+    @{ Name = "sp-pocs";  Value = "Stop-PocsLibrary"}
+    @{ Name = "ud-pocs";  Value = "Update-PocsLibrary"}
 
 ) | ForEach-Object {
     Set-Alias -Name $_.Name -Value $_.Value

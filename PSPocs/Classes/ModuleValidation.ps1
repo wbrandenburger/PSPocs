@@ -1,5 +1,5 @@
 # ===========================================================================
-#   PSPocs_Scripts.psm1 -----------------------------------------------------
+#   ModuleValidation.ps1 ----------------------------------------------------
 # ===========================================================================
 
 #   import ------------------------------------------------------------------
@@ -10,7 +10,7 @@ using namespace System.Management.Automation
 # ---------------------------------------------------------------------------
 Class ValidatePocsLibStrict : IValidateSetValuesGenerator {
     [String[]] GetValidValues() {
-        return [String[]] (Get-ValidatePocsLib)
+        return [String[]] (ValidatePocsLibrary)
     }
 }
 
@@ -18,7 +18,7 @@ Class ValidatePocsLibStrict : IValidateSetValuesGenerator {
 # ---------------------------------------------------------------------------
 Class ValidatePocsLib : IValidateSetValuesGenerator {
     [String[]] GetValidValues() {
-        return [String[]] ((Get-ValidatePocsLib) + "")
+        return [String[]] ((ValidatePocsLibrary) + "")
     }
 }
 
@@ -26,7 +26,7 @@ Class ValidatePocsLib : IValidateSetValuesGenerator {
 # ---------------------------------------------------------------------------
 Class ValidatePocsSectionStrict : IValidateSetValuesGenerator {
     [String[]] GetValidValues() {
-        return [String[]] (Get-ValidateSection)
+        return [String[]] (ValidatePocsConfigSection)
     }
 }
 
@@ -34,6 +34,8 @@ Class ValidatePocsSectionStrict : IValidateSetValuesGenerator {
 # ---------------------------------------------------------------------------
 Class ValidatePocsSection : IValidateSetValuesGenerator {
     [String[]] GetValidValues() {
-        return [String[]] ((Get-ValidateSection) + "")
+        return [String[]] ((ValidatePocsConfigSection) + "")
     }
 }
+
+

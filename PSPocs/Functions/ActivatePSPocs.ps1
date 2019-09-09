@@ -1,10 +1,35 @@
 # ===========================================================================
-#   Get-Validation.ps1 ------------------------------------------------------
+#   ActivatePocsAutocompletion.ps1 ------------------------------------------
 # ===========================================================================
 
 #   function ----------------------------------------------------------------
 # ---------------------------------------------------------------------------
-function Get-ValidatePocsLib {
+function ActivatePocsAutocompletion {
+
+    <#
+    .DESCRIPTION
+        Import PSPocs activating autocompletion for validating input of module functions.
+
+    .OUTPUTS
+        ScriptBlock. Scriptblock with using command.
+    #>
+
+    [CmdletBinding(PositionalBinding)]
+
+    [OutputType([ScriptBlock])]
+
+    Param()
+
+    Process {
+
+        return $(Get-Command $(Join-Path -Path $Module.ClassDir -ChildPath "ModuleValidation.ps1") | Select-Object -ExpandProperty ScriptBlock)
+
+    }
+}
+
+#   function ----------------------------------------------------------------
+# ---------------------------------------------------------------------------
+function ValidatePocsLibrary {
 
     <#
     .DESCRIPTION
@@ -29,7 +54,7 @@ function Get-ValidatePocsLib {
 
 #   function ----------------------------------------------------------------
 # ---------------------------------------------------------------------------
-function Get-ValidateSection {
+function ValidatePocsConfigSection {
 
     <#
     .DESCRIPTION

@@ -15,6 +15,8 @@ function Start-PocsLibrary {
 
     .PARAMETER Name
 
+    .PARAMETER VirtualEnv
+
     .PARAMETER Silent
 
     .EXAMPLE
@@ -53,18 +55,28 @@ function Start-PocsLibrary {
         [Parameter(Position=1, Mandatory=$True, ValueFromPipeline=$True, HelpMessage="Name of document and bibliography library, which should be started.")]
         [System.String] $Name,
 
+        [ValidateSet([ValidateVirtualEnv])]
+        [Parameter(Position=2, ValueFromPipeline=$True, HelpMessage="Name of virtual environment, which should be started.")]
+        [System.String] $VirtualEnv,
+
         [Parameter(HelpMessage="If switch 'silent' is true no output will written to host.")]
         [Switch] $Silent
     )
 
     Process {
 
-        # deactivation of a running virtual environment
+        # deactivation of a running document and bibliography session
         Restore-PocsLibrary
+        if ($VirtualEnv -and $(Get-ActiveVirtualEnv)) {
+            Restore-VirtualEnv
+        }
 
-        # activate the virtual environment
+        # activate rdocument and bibliography session
         Set-PocsLibrary -Name $Name
-
+        if ($VirtualEnv) {
+            Set-VirtualEnv -Name $VirtualEnv
+        }
+        
         if (-not $Silent) {
             Write-FormattedSuccess -Message "Document and bibliography library '$Name' was started." -Module $PSPocsLib.Name -Space
         }

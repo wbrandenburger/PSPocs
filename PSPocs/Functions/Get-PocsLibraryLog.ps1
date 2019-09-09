@@ -1,10 +1,10 @@
 # ===========================================================================
-#   Get-PocsConfigLogger.ps1 ------------------------------------------------
+#   Get-PocsLibraryLog.ps1 --------------------------------------------------
 # ===========================================================================
 
 #   function ----------------------------------------------------------------
 # ---------------------------------------------------------------------------
-function  Get-PocsConfigLogger {
+function  Get-PocsLibraryLog {
 
     <#
     .DESCRIPTION
@@ -21,6 +21,11 @@ function  Get-PocsConfigLogger {
     Param()
 
     Process{
+
+        if (-not $PSPocs.Logger) {
+            Write-FormattedWarning -Message "Nothing to return, no action has already been performed in this session." -Module $PSPocs.Name
+            return
+        }
 
         return $PSPocs.Logger | Format-Table -Property Id, Date, Action, Files
     }

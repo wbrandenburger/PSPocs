@@ -59,6 +59,6 @@ function Edit-PocsLibrary {
         if (-not $Name){
             $action = "All"
         }
-        Update-PocsLibrary -Structure $library_structure -Action "update:$($action)"
+        Update-PocsLibraryFromInput -Structure $library_structure -Action "update:$($action)"
     }
 }

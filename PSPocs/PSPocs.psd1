@@ -13,7 +13,7 @@
 RootModule = "PSPocs.psm1"
 
 # Version number of this module.
-ModuleVersion = "0.2.0"
+ModuleVersion = "0.3.0"
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -63,7 +63,7 @@ RequiredModules = @(
 # RequiredAssemblies = @()
 
 # Script files (.ps1) that are run in the caller"s environment prior to importing this module.
-ScriptsToProcess = @("PSPocs_Scripts.ps1")
+ScriptsToProcess = @()
 
 # Type files (.ps1xml) to be loaded when importing this module
 # TypesToProcess = @()
@@ -76,35 +76,41 @@ ScriptsToProcess = @("PSPocs_Scripts.ps1")
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
-    "Add-PocsLibrary"
+    "ActivatePocsAutocompletion",
     "Edit-PocsLibrary",
-    "Get-PocsConfigLogger"
+    "Get-ActivePocsLib",
+    "Get-PocsLibraryLog",
     "Get-PocsLibrary",
-    "Get-ValidatePocsLib",
-    "Get-ValidateSection",
-    "Restore-PocsConfig",   
+    "New-PocsLibrary",
+    "Repair-PocsLibrary",
+    "Restore-PocsLibrary",   
     "Remove-PocsLibrary",
     "Set-PocsLibrary",
     "Start-PocsLibrary",
     "Stop-PocsLibrary",
     "Update-PocsLibrary",
-    "Write-PocsLibStatus"
+    "Write-PocsLibStatus",
+    "ValidatePocsLibrary",
+    "ValidatePocsConfigSection"
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
 
 # Variables to export from this module
-VariablesToExport = "*"
+VariablesToExport = "PSPocs"
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
 AliasesToExport = @(
+    "ed-pocs",
+    "log-pocs",
     "ls-pocs",
-    "new-pocs",
-    "rm-pocs"
-    "vsx-pocs"
-    "start-pocs",
-    "stop-pocs"
+    "n-pocs",
+    "rm-pocs",
+    "rp-pocs",
+    "sa-pocs",
+    "sp-pocs",
+    "ud-pocs"
 )
 
 # DSC resources to export from this module
@@ -124,11 +130,11 @@ PrivateData = @{
         # Tags applied to this module. These help with module discovery in online galleries.
         Tags = @(
             "papis",
-            "bibliography"
+            "bibliography",
             "literature",
             "management",
             "bibtex",
-            "documents"
+            "documents",
             "python",
             "powershell",
             "windows"

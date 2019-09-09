@@ -39,7 +39,7 @@ function Remove-PocsLibrary {
             $library_structure.Source = $library_structure.Library
 
             # remove key from literature and document configuration settings and update module structures
-            Update-PocsLibrary -Structure $library_structure -Action "remove"
+            Update-PocsLibraryFromInput -Structure $library_structure -Action "remove"
         }
     }
 }

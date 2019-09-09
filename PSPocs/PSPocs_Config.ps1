@@ -10,6 +10,10 @@
         Value=Join-Path -Path $Module.Dir -ChildPath "$($Module.Name).psd1"
     }
     @{  # directory of functions
+        Name="ClassDir"
+        Value=Join-Path -Path $Module.Dir -ChildPath "Classes"
+    } 
+    @{  # directory of functions
         Name="FunctionsDir"
         Value=Join-Path -Path $Module.Dir -ChildPath "Functions"
     }
@@ -31,3 +35,5 @@ $PSPocs = New-Object -TypeName PSCustomObject -Property @{
     Logger = @()
     LibraryDefault = $default_library
 }
+
+
