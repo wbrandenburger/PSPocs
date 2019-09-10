@@ -6,6 +6,7 @@
 # ---------------------------------------------------------------------------
 
 @(
+    @{ Name = "activate-pocs";  Value = "ActivatePocsAutocompletion"}
     @{ Name = "ed-pocs";  Value = "Edit-PocsLibrary"}
     @{ Name = "log-pocs"; Value = "Get-PocsLibraryLog"}
     @{ Name = "ls-pocs";  Value = "Get-PocsLibrary"}

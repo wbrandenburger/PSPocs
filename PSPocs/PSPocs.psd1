@@ -13,7 +13,7 @@
 RootModule = "PSPocs.psm1"
 
 # Version number of this module.
-ModuleVersion = "0.3.0"
+ModuleVersion = "0.4.0"
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -59,7 +59,7 @@ RequiredModules = @(
     }
     @{
         ModuleName = "PSVirtualEnv";
-        ModuleVersion = "0.4.0";
+        ModuleVersion = "0.5.0";
         GUID = "ca0b4a5a-af4a-416f-a478-e12d116f95b4";
     }
 )
@@ -77,7 +77,7 @@ ScriptsToProcess = @()
 # FormatsToProcess = @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-# NestedModules = @()
+NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
@@ -108,6 +108,7 @@ VariablesToExport = "PSPocs"
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
 AliasesToExport = @(
+    "activate-pocs",
     "ed-pocs",
     "log-pocs",
     "ls-pocs",

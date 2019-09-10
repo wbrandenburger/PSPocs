@@ -23,9 +23,37 @@ function ActivatePocsAutocompletion {
     Process {
 
         return $(Get-Command $(Join-Path -Path $Module.ClassDir -ChildPath "ModuleValidation.ps1") | Select-Object -ExpandProperty ScriptBlock)
-
     }
 }
+
+# #   function ----------------------------------------------------------------
+# # ---------------------------------------------------------------------------
+# function ActivatePocsAutocompletion {
+
+#     <#
+#     .DESCRIPTION
+#         Import PSPocs activating autocompletion for validating input of module functions.
+
+#     .OUTPUTS
+#         ScriptBlock. Scriptblock with using command.
+#     #>
+
+#     [CmdletBinding(PositionalBinding)]
+
+#     [OutputType([ScriptBlock])]
+
+#     Param()
+
+#     Process {
+
+#         $script_list = @(
+#             ActivateVirtualEnvAutocompletion;
+#             $(Get-Command $(Join-Path -Path $Module.ClassDir -ChildPath "ModuleValidation.ps1") | Select-Object -ExpandProperty ScriptBlock)
+#         )
+        
+#         return Join-ScriptBlock -Scripts $script_list
+#     }
+# }
 
 #   function ----------------------------------------------------------------
 # ---------------------------------------------------------------------------
