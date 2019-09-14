@@ -8,7 +8,7 @@ function Get-PocsLibrary {
 
     <#
     .DESCRIPTION
-        Get existing literature and document libraries
+        Get existing literature and document libraries.
 
     .PARAMETER Name
 

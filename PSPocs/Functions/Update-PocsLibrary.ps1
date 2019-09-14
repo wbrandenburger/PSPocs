@@ -8,7 +8,7 @@ function Update-PocsLibrary {
 
     <#
     .DESCRIPTION
-        Update content of literature and document file for preprocessing.
+        Update content of literature and document file while reading from package's configuration file.
     
     .OUTPUTS
         None.

@@ -8,7 +8,7 @@ function Remove-PocsLibrary {
 
     <#
     .DESCRIPTION
-        Remove existing literature and document libraries
+        Remove existing literature and document libraries.
 
     .PARAMETER Name
 

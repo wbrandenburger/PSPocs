@@ -8,7 +8,7 @@ function Edit-PocsLibrary {
 
     <#
     .DESCRIPTION
-        Get existing literature and document libraries
+        Edit existing literature and document libraries.
 
     .PARAMETER Name
 

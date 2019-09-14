@@ -4,6 +4,7 @@
 
 - [PSPocs](#pspocs)
   - [Table of Contents](#table-of-contents)
+  - [General](#general)
   - [Description](#description)
   - [Installation](#installation)
   - [Dependencies](#dependencies)
@@ -12,9 +13,13 @@
   - [Authors/Contributors](#authorscontributors)
     - [Author](#author)
 
+## General
+
+The module PSPocs is in an experimental status and will be developed to achieve a stable version as fast as possible. The documentation of several functions has to be customized, due to the last changes.
+
 ## Description
 
-The module PSPocs is a set of powershell extensions to papis, a highly extensible command-line based bibliography and document manager.
+The module PSPocs is a wrapper for applying papis in windows with powershell. [Papis](https://github.com/papis/papis) is a highly extensible command-line based bibliography and document manager written in Python.
 
 ## Installation
 
@@ -24,26 +29,35 @@ PSPocs is published to the Powershell Gallery and can be installed as follows:
 Install-Module PSPocs
 ```
 
+To activate PSPocs and its autocompletion there is the need to dotsource in shell or in the local profile the output of `ActivatePocsAutocompletion`:
+
+```powershell
+. (ActivatePocsAutocompletion) # or in short '. (activate-pocs)'
+```
+
+If loading the classes for autocompletion of PSPocs function parameters, corresponding classes for required module PSVirtual are also be loaded.
+
 ## Dependencies
 
-The following PowerShell module will be automatically installed:
+The following PowerShell modules will be automatically installed:
 
 - [PSIni](https://github.com/lipkau/PsIni)
+- [PSVirtualEnv](https://github.com/wbrandenburger/PSVirtualEnv)
 
 ## Available Commands
 
-| Command                  | Alias        | Description                                                                                 |
-|--------------------------|--------------|---------------------------------------------------------------------------------------------|
-| `Set-VirtualEnvLocation` | `cd-venv`    | Set the location of the predefined directory.                                               |
-| `Install-VirtualEnv`     | `in-venv`    | Install or upgrade packages from command line or requirement files to virtual environments. |
-| `Find-Python`            |              | Find a path, where a python distribution might located.                                     |
-| `Get-Requirement`        |              | Create the requirement file of a specific virtual environment.                              |
-| `Get-RequirementContent` |              | Get the content of a existing requirement file.                                             |
-| `Get-VirtualEnv`         | `ls-venv`    | List all existing virtual environments in predefined directory.                             |
-| `New-VirtualEnv`         | `mk-venv`    | Creates a virtual environment.                                                              |
-| `Remove-VirtualEnv`      | `rm-venv`    | Removes a specific virtual environment in the predefined directory.                         |
-| `Start-VirtualEnv`       | `start-venv` | Starts a specific virtual environment in the predefined directory.                          |
-| `Stop-VirtualEnv`        | `stop-venv`  | Stops current running virtual environment.                                                  |
+| Command               | Alias     | Description                                                                                     |
+|-----------------------|-----------|-------------------------------------------------------------------------------------------------|
+| `Edit-PocsLib`        | `ed-venv` | Edit existing literature and document libraries.                                                |
+| `Get-PocsLib`         | `ls-venv` | Get existing literature and document libraries directory.                                       |
+| `New-PocsLib`         | `mk-venv` | Add a literature and document library and store it in package's configuration file.             |
+| `Remove-PocsLib`      | `rm-venv` | Remove existing literature and document libraries.                                              |
+| `Repair-PocsLib`      | `rp-pocs` | Reverse changes to literature and document libraries in current powershell session.             |
+| `Start-PocsLib`       | `sa-pocs` | Starts a specific papis library defined in package's configuration file.                        |
+| `Start-PocsProcess`   | `sa-lib`  | Starts a specific papis library defined in package's configuration file.                        |
+| `Stop-PocsLib`        | `sp-pocs` | Stops current running papis library.                                                            |
+| `Update-PocsLib`      | `ud-pocs` | Update content of literature and document file while reading from package's configuration file. |
+| `Write-PocsLibStatus` |           | Function to use in extensions for prompt, writing status of current running papis library.      |
 
 ## Examples
 

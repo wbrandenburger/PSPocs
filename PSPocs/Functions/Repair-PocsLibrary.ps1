@@ -8,7 +8,7 @@ function  Repair-PocsLibrary {
 
     <#
     .DESCRIPTION
-        Restore literature and document config files with specified index.
+        Reverse changes to literature and document libraries in current powershell session.
 
     .PARAMETER Index
     

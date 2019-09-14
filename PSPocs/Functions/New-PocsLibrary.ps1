@@ -8,7 +8,7 @@ function  New-PocsLibrary {
 
     <#
     .DESCRIPTION
-        Add a literature and document library and write it to config file.
+        Add a literature and document library and store it in package's configuration file.
 
     .OUTPUTS
         None.
