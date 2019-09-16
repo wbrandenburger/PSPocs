@@ -13,6 +13,8 @@ function Stop-PocsLibrary {
     .DESCRIPTION
         Stops current running literature and document manager session.
 
+    .PARAMETER VirtualEnv
+
     .PARAMETER Silent
     
     .EXAMPLE
@@ -49,6 +51,9 @@ function Stop-PocsLibrary {
     [OutputType([Void])]
 
     Param(
+        [Parameter(HelpMessage="Possible running virtual environments will be stopped.")]
+        [Switch] $VirtualEnv,
+
         [Parameter(HelpMessage="If switch 'silent' is true no output will written to host.")]
         [Switch] $Silent
     )
@@ -65,7 +70,7 @@ function Stop-PocsLibrary {
         }
 
         # deactivation of a running document and bibliography session
-        Restore-PocsLibrary
+        Restore-PocsLibrary -VirtualEnv:$VirtualEnv
 
         # if the environment variable is not empty, deactivation failed
         if (-not $Silent) {

@@ -24,7 +24,7 @@ function Set-PocsLibrary {
         [Parameter(Position=1, HelpMessage="Name of literature and document library.")]
         [System.String] $Name,
 
-        [Parameter(Position=2, ValueFromPipeline, HelpMessage="Name of virtual environment, which should be started.")]
+        [Parameter(Position=2, HelpMessage="Name of virtual environment, which should be started.")]
         [System.String] $VirtualEnv
     )
 
@@ -60,6 +60,8 @@ function Restore-PocsLibrary{
     .DESCRIPTION
         Restore environment variable, which are set by Set-PocsLibrary.
 
+    .PARAMETER VirtualEnv
+
     .OUTPUTS 
         None.
     #>
@@ -67,7 +69,10 @@ function Restore-PocsLibrary{
 
     [OutputType([Void])]
 
-    Param ()
+    Param (
+        [Parameter(HelpMessage="Possible running virtual environments will be stopped.")]
+        [Switch] $VirtualEnv
+    )
 
     Process {
         # stop literature and document manager session
@@ -78,6 +83,10 @@ function Restore-PocsLibrary{
         if($pocs_lib_old) {
             [System.Environment]::SetEnvironmentVariable($PSPocs.ProjectEnvOld, $Null, "process")
             Set-PocsLibrary -Name $pocs_lib_old
+        }
+
+        if ($VirtualEnv) {
+            Restore-VirtualEnv
         }
     }
 }

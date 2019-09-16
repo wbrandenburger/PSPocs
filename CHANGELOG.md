@@ -1,5 +1,16 @@
 # Change Log
 
+## [0.4.3](https://github.com/wbrandenburger/PSPocs/tree/0.4.3) (2019-09-15)
+
+**Implemented enhancements:**
+
+
+## [0.4.2](https://github.com/wbrandenburger/PSPocs/tree/0.4.2) (2019-09-15)
+
+**Implemented enhancements:**
+
+- Stop virtual environment after start process with papis in `Start-PocsProcess`
+
 ## [0.4.1](https://github.com/wbrandenburger/PSPocs/tree/0.4.1) (2019-09-15)
 
 **Implemented enhancements:**

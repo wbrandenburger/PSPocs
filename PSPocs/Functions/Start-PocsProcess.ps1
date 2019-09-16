@@ -45,8 +45,7 @@ function Start-PocsProcess {
             Write-FormattedSuccess -Message "No document and bibliography library is running." -Module $PSPocsLib.Name -Space
             return
         }
-
-        if (-not $(Get-ActiveVirtualEnv)) {
+        elseif (-not $(Get-ActiveVirtualEnv)) {
             Write-FormattedSuccess -Message "No virtual environment is running." -Module $PSPocsLib.Name -Space
             return
         }
@@ -59,5 +58,7 @@ function Start-PocsProcess {
         }
 
         Start-Process -FilePath pwsh -ArgumentList "-NoLogo", "-NoExit", "-NoProfile", "-Command", $cmd
+
+        Restore-PocsLibrary -VirtualEnv
     }
 }
