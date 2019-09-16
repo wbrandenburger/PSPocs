@@ -2,8 +2,9 @@
 
 ## [0.4.3](https://github.com/wbrandenburger/PSPocs/tree/0.4.3) (2019-09-15)
 
-**Implemented enhancements:**
+**Fixed bugs:**
 
+- Abort initialization of module, if configuration file for papis cannot be found.
 
 ## [0.4.2](https://github.com/wbrandenburger/PSPocs/tree/0.4.2) (2019-09-15)
 

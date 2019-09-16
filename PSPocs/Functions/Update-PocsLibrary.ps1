@@ -22,6 +22,11 @@ function Update-PocsLibrary {
 
     Process{
 
+        if (-not $(Test-Path -Path $PSPocs.Config)){
+            Write-FormattedError -Message "Configuration file for papis $($PSPocs.Config) cannot be found." -Module $PSPocs.Name
+            return
+        }
+        
         # read general literature and document manager config file and add it to main module variable
         $PSPocs.ConfigContent = Get-IniContent -FilePath $PSPocs.Config -IgnoreComments
         
