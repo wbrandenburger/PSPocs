@@ -13,7 +13,7 @@
 RootModule = "PSPocs.psm1"
 
 # Version number of this module.
-ModuleVersion = "0.4.3"
+ModuleVersion = "0.4.4"
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -82,6 +82,8 @@ NestedModules = @("PSModuleUtils\PSModuleUtils.psm1")
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
     "ActivatePocsAutocompletion",
+    "Edit-PocsConfig",
+    "Get-PocsConfig",
     "Edit-PocsLibrary",
     "Get-ActivePocsLib",
     "Get-PocsLibraryLog",

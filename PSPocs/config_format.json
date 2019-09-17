@@ -1,0 +1,26 @@
+[
+    {
+        "Id" : "Editor",
+        "Field" : "default-editor",
+        "Section" : "user", 
+        "Default" : "notepad"
+    },
+    {
+        "Id" : "EditorArgs",
+        "Field" : "editor-arguments", 
+        "Section" : "user", 
+        "Default" : ""
+    },
+    {
+        "Id" : "VirtualEnv",
+        "Field" : "virtual-env", 
+        "Section" : "pocs", 
+        "Default" : "papis-attempt"
+    },
+    {
+        "Id" : "PapisPckg",
+        "Field" : "papis-packages", 
+        "Section" : "pocs", 
+        "Default" : "papis-env"
+    }
+]

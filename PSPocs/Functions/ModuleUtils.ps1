@@ -331,9 +331,9 @@ function Get-LibraryStructure {
             $structure = @( 
                 [PSCustomObject] @{ 
                     "Key" = @($Name) 
-                    "Path" = $PSPocs.Config
+                    "Path" = $PSPocs.PapisConfig
                     "Library" = @{ $Name = $library} 
-                    "Source"= $PSPocs.ConfigContent 
+                    "Source"= $PSPocs.PapisConfigContent 
                 }
             )
 
@@ -355,15 +355,15 @@ function Get-LibraryStructure {
         }
         else{
             # get the whole content of general literature and document library configuration file
-            $library = $PSPocs.ConfigContent
+            $library = $PSPocs.PapisConfigContent
             
             # create structure of library
             return  @( 
                 [PSCustomObject] @{ 
                     "Key" = @($library.Keys)
-                    "Path" = $PSPocs.Config
+                    "Path" = $PSPocs.PapisConfig
                     "Library" = $library
-                    "Source"= $PSPocs.ConfigContent 
+                    "Source"= $PSPocs.PapisConfigContent 
                 }
             )
         }

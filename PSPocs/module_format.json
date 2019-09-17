@@ -14,5 +14,9 @@
     {
         "Name":"TestsDir", 
         "Value":"%(Dir)s\\Tests"
+    },
+    {
+        "Name":"ConfigFormat", 
+        "Value":"%(Dir)s\\config_format.json"
     }
 ]

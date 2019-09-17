@@ -1,5 +1,15 @@
 # Change Log
 
+## [0.4.4](https://github.com/wbrandenburger/PSPocs/tree/0.4.4) (2019-09-17s)
+
+**Implemented enhancements:**
+
+- Added installation of papis from fork
+- Added configuration file
+- Added fields `virtual-env` and `papis-packages` to configuration file for installing papis
+- Added fields `default-editor` and `editor-arguments`to configuration file for editing config files
+- Added functions `Get-PocsConfig` and `Edit-PocsConfig`
+
 ## [0.4.3](https://github.com/wbrandenburger/PSPocs/tree/0.4.3) (2019-09-15)
 
 **Fixed bugs:**

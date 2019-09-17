@@ -56,8 +56,8 @@ function Start-PocsLibrary {
         [System.String] $Name,
 
         [ValidateSet([ValidateVirtualEnv])]
-        [Parameter(Position=2, ValueFromPipeline, HelpMessage="Name of virtual environment, which should be started.")]
-        [System.String] $VirtualEnv,
+        [Parameter(Position=2, HelpMessage="Name of virtual environment, which should be started.")]
+        [System.String] $VirtualEnv = $PSPocs.VirtualEnv,
 
         [Parameter(HelpMessage="If switch 'silent' is true no output will written to host.")]
         [Switch] $Silent
@@ -71,7 +71,7 @@ function Start-PocsLibrary {
             Restore-VirtualEnv
         }
 
-        # activate rdocument and bibliography session
+        # activate document and bibliography session
         Set-PocsLibrary -Name $Name -VirtualEnv $VirtualEnv
 
         if (-not $Silent) {

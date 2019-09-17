@@ -9,6 +9,7 @@ $name = [System.IO.Path]::GetFileNameWithoutExtension($path)
 $Module = New-Object -TypeName PSObject -Property @{
     Name = $name
     Dir =  Split-Path -Path $path -Parent
+    Config = Get-ConfigProjectFile -Name $name
 }
 
 #   configuration -----------------------------------------------------------
