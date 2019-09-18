@@ -47,22 +47,26 @@ function Edit-PocsLibrary {
         # user input for updating or cancelling editing document and bibliography libraries
         $message  = "Edit document and bibliography libraries"
         $question = "Do you want to update your changes, or create a new object from library?"
-        $choices = "&Update", "&Quit"
-        $decision = $Host.UI.PromptForChoice($message, $question, $choices, 1)
+        $choices = "&Update", "&Wait/Update", "&Quit"
+        
+        $decision = 1
+        while ($decision -eq 1) {
+            $decision = $Host.UI.PromptForChoice($message, $question, $choices, 1)
 
-        # quit if chosen
-        if ($decision -eq 1) {
-            return
+            # quit if chosen
+            if ($decision -eq 2) {
+                return
+            }
+
+            # get modified document and bibliography libraries
+            $library_structure = Update-LibraryStructure -Library $(Get-IniContent -FilePath $temp_file -IgnoreComments) -Structure $library_structure
+
+            # update keys in literature and document configuration settings and update module structures
+            $action = $Name
+            if (-not $Name){
+                $action = "All"
+            }
+            Update-PocsLibraryFromInput -Structure $library_structure -Action "update:$($action)"
         }
-
-        # get modified document and bibliography libraries
-        $library_structure = Update-LibraryStructure -Library $(Get-IniContent -FilePath $temp_file -IgnoreComments) -Structure $library_structure
-
-        # update keys in literature and document configuration settings and update module structures
-        $action = $Name
-        if (-not $Name){
-            $action = "All"
-        }
-        Update-PocsLibraryFromInput -Structure $library_structure -Action "update:$($action)"
     }
 }

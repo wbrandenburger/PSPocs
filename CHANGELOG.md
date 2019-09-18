@@ -1,6 +1,12 @@
 # Change Log
 
-## [0.4.4](https://github.com/wbrandenburger/PSPocs/tree/0.4.4) (2019-09-17s)
+## [0.4.6](https://github.com/wbrandenburger/PSPocs/tree/0.4.6) (2019-09-18)
+
+**Implemented enhancements:**
+
+- Added option `Wait/Update` to function `Edit-PocsLibrary`
+
+## [0.4.4](https://github.com/wbrandenburger/PSPocs/tree/0.4.4) (2019-09-17)
 
 **Implemented enhancements:**
 
