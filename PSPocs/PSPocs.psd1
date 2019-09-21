@@ -13,7 +13,7 @@
 RootModule = "PSPocs.psm1"
 
 # Version number of this module.
-ModuleVersion = "0.4.5"
+ModuleVersion = "0.4.6"
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -92,10 +92,12 @@ FunctionsToExport = @(
     "Repair-PocsLibrary",
     "Restore-PocsLibrary",   
     "Remove-PocsLibrary",
+    "Repair-PocsPapis",
     "Set-PocsLibrary",
     "Start-PocsProcess"
     "Start-PocsLibrary",
     "Stop-PocsLibrary",
+    "Stop-PocsLibraryVirtualEnv",
     "Update-PocsLibrary",
     "Write-PocsLibStatus",
     "ValidatePocsLibrary",
@@ -117,9 +119,11 @@ AliasesToExport = @(
     "n-pocs",
     "rm-pocs",
     "rp-pocs",
+    "rp-papis",
     "sa-pocs",
     "sa-lib"
     "sp-pocs",
+    "sp-pocs-venv",
     "ud-pocs"
 )
 

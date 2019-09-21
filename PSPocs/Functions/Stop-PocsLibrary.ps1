@@ -18,26 +18,22 @@ function Stop-PocsLibrary {
     .PARAMETER Silent
     
     .EXAMPLE
-        [venv] PS C:\> Stop-VirtualEnv
+        [venv] PS C:\> Stop-PocsLibrary
 
-        [PSVirtualEnv]::SUCCESS: Virtual enviroment 'venv' was stopped.
-
-        PS C:\>
+        [PSPocs]::SUCCESS: Document and bibliography session with library 'pocs' was stopped.
 
         -----------
         Description
-        Stops current virtual environment. 
+        Stops current literature and document manager session. 
 
     .EXAMPLE
-        [venv] PS C:\> Stop-venv
+        [venv] PS C:\> sp-pocs
 
-        SUCCESS: Virtual enviroment 'venv' was stopped.
+        [PSPocs]::SUCCESS: Document and bibliography session with library 'pocs' was stopped.
 
-        PS C:\>
-        
         -----------
         Description
-        Stops current virtual environment with predefined alias of command.
+        Stops current literature and document manager session with predefined alias of command.
 
     .INPUTS
         None.
@@ -51,7 +47,7 @@ function Stop-PocsLibrary {
     [OutputType([Void])]
 
     Param(
-        [Parameter(HelpMessage="Possible running virtual environments will be stopped.")]
+        [Parameter(HelpMessage="Possible running virtual environment will be stopped.")]
         [Switch] $VirtualEnv,
 
         [Parameter(HelpMessage="If switch 'silent' is true no output will written to host.")]
@@ -64,7 +60,7 @@ function Stop-PocsLibrary {
         $pocs_lib_old = Get-ActivePocsLib
         if (-not $pocs_lib_old){
             if (-not $Silent) {
-                Write-FormattedWarning -Message "There was no document and bibiography session found." -Module $PSPocsLib.Name -Space
+                Write-FormattedWarning -Message "There was no document and bibiography session found." -Module $PSPocs.Name -Space
             }
             return
         }
@@ -75,11 +71,53 @@ function Stop-PocsLibrary {
         # if the environment variable is not empty, deactivation failed
         if (-not $Silent) {
             if ($pocs_lib_old -and $pocs_lib_old -eq $(Get-ActivePocsLib)) {
-                Write-FormattedError -Message "Document and bibliography session with library '$pocs_lib_old' could not be stopped." -Module $PSPocsLib.Name -Space
+                Write-FormattedError -Message "Document and bibliography session with library '$pocs_lib_old' could not be stopped." -Module $PSPocs.Name -Space
             }         
             else{
-                Write-FormattedSuccess -Message "Document and bibliography session with library '$pocs_lib_old' was stopped." -Module $PSPocsLib.Name -Space
+                Write-FormattedSuccess -Message "Document and bibliography session with library '$pocs_lib_old' was stopped." -Module $PSPocs.Name -Space
             }
         }
+    }
+}
+
+#   function ----------------------------------------------------------------
+# ---------------------------------------------------------------------------
+function Stop-PocsLibraryVirtualEnv {
+
+    <#
+    .SYNOPSIS
+        Stops current running literature and document manager session, as well as running virtual environment.
+
+    .DESCRIPTION
+        Stops current running literature and document manager session, as well as running virtual environment.
+
+    .PARAMETER Silent
+
+    .EXAMPLE
+        [venv] PS C:\> Stop-PocsLibraryVirtualEnv
+
+        [PSPocs]::SUCCESS: Document and bibliography session with library 'pocs' was stopped.
+
+        -----------
+        Description
+        Stops current literature and document manager session as well as running virtual environment.
+
+    .INPUTS
+        None.
+
+    .OUTPUTS
+        None.
+    #>
+    [CmdletBinding(PositionalBinding)]
+
+    [OutputType([Void])]
+
+    Param(
+        [Parameter(HelpMessage="If switch 'silent' is true no output will written to host.")]
+        [Switch] $Silent
+    )
+
+    Process { 
+        Stop-PocsLibrary -VirtualEnv -Silent:$Silent
     }
 }

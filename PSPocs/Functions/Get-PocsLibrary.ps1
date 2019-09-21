@@ -28,8 +28,11 @@ function Get-PocsLibrary {
         [Parameter(Position=1, ValueFromPipeline, HelpMessage="Name of document and bibliography library.")]
         [System.String] $Name,
 
-        [Parameter(ValueFromPipeline, HelpMessage="Name of document and bibliography library.")]
-        [System.String] $Property
+        [Parameter(ValueFromPipeline, HelpMessage="Existing property of document and bibliography library.")]
+        [System.String] $Property,
+
+        [Parameter(HelpMessage="Return information not as readable table with additional details.")]
+        [Switch] $Unformatted
     )
 
     Process{
@@ -43,20 +46,24 @@ function Get-PocsLibrary {
         }
         else {
             # get all existing document and bibliography libraries
-            return $PSPocs.Library | Format-Table -Property Name, Library, @{
-                Label = "Path"
-                Expression = {if ($_.Library){$_.Content["dir"]} else {$Null}}
-            }, @{
-                Label = "Content"
-                Expression = {
-                    if ($Property) {
-                        if ($_.Library){
-                            $_.Content[$Property]
+            if ($Unformatted) {
+                return $PSPocs.Library
+            } else {
+                return $PSPocs.Library | Format-Table -Property Name, Library, @{
+                    Label = "Path"
+                    Expression = {if ($_.Library){$_.Content["dir"]} else {$Null}}
+                }, @{
+                    Label = "Content"
+                    Expression = {
+                        if ($Property) {
+                            if ($_.Library){
+                                $_.Content[$Property]
+                            } else {
+                                $Null
+                            }
                         } else {
-                            $Null
+                            $_.Content
                         }
-                    } else {
-                        $_.Content
                     }
                 }
             }

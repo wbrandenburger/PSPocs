@@ -22,23 +22,6 @@ function Update-PocsLibrary {
 
     Process{
         
-        if (-not $(Get-VirtualEnv -Unformatted | Where-Object { $_.Name -eq $PSPocs.VirtualEnv})){
-            Write-FormattedWarning -Message "Virtual environment '$($PSPocs.VirtualEnv)' cannot be found. Installation of new virtual environment." -Module $PSPocs.Name
-
-            New-VirtualEnv -Name $PSPocs.VirtualEnv
-        } 
-
-        if (-not $((Get-VirtualEnv -Name $PSPocs.VirtualEnv -Unformatted) | Where-Object { $_.Name -eq "papis"})){
-            Write-FormattedWarning -Message "Package 'papis' can not be found in virtual environment '$($PSPocs.VirtualEnv)' can not be found. Installation of 'papis'." -Module $PSPocs.Name
-
-            Install-VirtualEnv -Name $PSPocs.VirtualEnv -Package "$($PSPocs.PapisPckg)" 2>&1> $Null
-        } 
-
-        if (-not $(Test-Path -Path $PSPocs.PapisConfig)){
-            Write-FormattedError -Message "Papis configuration file '$($PSPocs.PapisConfig)' cannot be found." -Module $PSPocs.Name
-            return
-        }
-        
         # read general literature and document manager config file and add it to main module variable
         $PSPocs.PapisConfigContent = Get-IniContent -FilePath $PSPocs.PapisConfig -IgnoreComments
         

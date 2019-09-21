@@ -1,10 +1,15 @@
 # Change Log
 
-## [0.4.6](https://github.com/wbrandenburger/PSPocs/tree/0.4.6) (2019-09-18)
+## [0.4.6](https://github.com/wbrandenburger/PSPocs/tree/0.4.6) (2019-09-21)
 
 **Implemented enhancements:**
 
 - Added option `Wait/Update` to function `Edit-PocsLibrary`
+- Added function `Repair-TestEnvironment` for validation and setting of a papis environment.
+
+**Fixed bugs:**
+
+- If the main papis configuration file can not be found, a valid configuration file will be set.
 
 ## [0.4.4](https://github.com/wbrandenburger/PSPocs/tree/0.4.4) (2019-09-17)
 

@@ -19,8 +19,8 @@
     },
     {
         "Id" : "PapisPckg",
-        "Field" : "papis-packages", 
+        "Field" : "papis-package", 
         "Section" : "pocs", 
-        "Default" : "papis-env"
+        "Default" : "-e git+http://github.com/wbrandenburger/papis.git@beta#egg=papis"
     }
 ]
