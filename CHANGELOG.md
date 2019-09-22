@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.4.7](https://github.com/wbrandenburger/PSPocs/tree/0.4.7) (2019-09-22)
+
+**Implemented enhancements:**
+
+- Added opportunity for online and offline installation of package `papis` to function `Repair-Papis`.
+
 ## [0.4.6](https://github.com/wbrandenburger/PSPocs/tree/0.4.6) (2019-09-21)
 
 **Implemented enhancements:**
