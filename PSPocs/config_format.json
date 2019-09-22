@@ -1,4 +1,20 @@
-[
+[    
+    {
+        "Id" : "WorkDir", 
+        "Field" : "work-dir", 
+        "Section" : "user", 
+        "Default" : "%(WorkDir)s",
+        "Required" : true,
+        "Folder" : true
+    },
+    {
+        "Id" : "ConfigDir", 
+        "Field" : "config-dir", 
+        "Section" : "user", 
+        "Default" : "%(WorkDir)s\\config",
+        "Required" : true,
+        "Folder" : true
+    },
     {
         "Id" : "Editor",
         "Field" : "default-editor",
