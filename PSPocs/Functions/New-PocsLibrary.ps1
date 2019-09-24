@@ -32,8 +32,12 @@ function  New-PocsLibrary {
         [Parameter(Position=1, Mandatory, ValueFromPipeline, HelpMessage="Name of document and bibliography library.")]
         [System.String] $Name,
 
+        [ValidateSet("default", "docs", "paper", "work")]
+        [Parameter(Position=2, HelpMessage="Type of document and bibliography library.")]
+        [System.String] $Type="default",
+
         [ValidateSet([ValidateVirtualEnv])]
-        [Parameter(Position=2, HelpMessage="Name of virtual environment.")]
+        [Parameter(Position=3, HelpMessage="Name of virtual environment with required packages for opening document and bibliography library.")]
         [System.String] $VirtualEnv = $PSPocs.VirtualEnv,
 
         [Parameter(HelpMessage="Extension identifier of document and bibliography library.")]
@@ -44,6 +48,12 @@ function  New-PocsLibrary {
 
         # update existing literature and document libraries
         Update-PocsLibrary
+
+        if ($(ValidatePocsConfigSection) -contains $Name) {
+            Write-FormattedError -Message "Document and bibliography library does exist. Abort Operation." -Module $PSPocs.Name -Space
+
+            return
+        }
 
         # create structure for subsitution of placeholders in default library
         $object = @{
@@ -64,11 +74,37 @@ function  New-PocsLibrary {
                 $library[$Name] += @{ $key = $value }
             }
         }
- 
+
+        # create structure of library
+        $library_structure = @( 
+            [PSCustomObject] @{ 
+                "Key" = @($Name) 
+                "Path" = $PSPocs.PapisConfig
+                "Library" = $library
+                "Source"= $PSPocs.PapisConfigContent 
+            }
+        )
+
+         # get type specific file
+         if ($type) {
+            $type_path = Get-ChildItem -Path $PSPocs.ConfigDir -Filter "*$($type)*" | Select-Object -ExpandProperty FullName
+            $config_file = Join-Path -Path $PSPocs.PapisLibDir -ChildPath "$name.ini"
+            if (Test-Path -Path $type_path) {
+                $local_library = Get-IniContent -FilePath $type_path
+                $library += $local_library
+                
+                # create structure of library
+                $library_structure += [PSCustomObject] @{ 
+                    "Key" = @($local_library.Keys)
+                    "Path" = $config_file
+                    "Library" = $local_library
+                    "Source" = $local_library
+                }
+            }
+        }
 
         # # get specified library and create structure fur further processing
         $temp_file = New-TemporaryConfig -Library $library -Open
-        $library_structure = Get-LibraryStructure
 
         # user input for updating or cancelling editing document and bibliography libraries
         $message  = "Add file to document and bibliography database"
@@ -82,8 +118,8 @@ function  New-PocsLibrary {
         }
 
         # get modified document and bibliography libraries
-        $library_structure = Add-LibraryStructure -Library $( Get-IniContent -FilePath $temp_file -IgnoreComments) -Structure $library_structure
-
+        #$library_structure = Add-LibraryStructure -Library $( Get-IniContent -FilePath $temp_file -IgnoreComments) -Structure $library_structure
+        $library_structure += Update-LibraryStructure -Library $(Get-IniContent -FilePath $temp_file -IgnoreComments) -Structure $library_structure     
         # add key to literature and document configuration settings and update module structures
         Update-PocsLibraryFromInput -Structure $library_structure -Action "add"
     }

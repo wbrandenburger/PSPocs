@@ -5,6 +5,7 @@
 **Implemented enhancements:**
 
 - Added parameter `Name`, `VirtualEnv` and `Identifier` to function `New-PocsLibrary` for generated adjusted libraries.
+- Added get and edit all configuration files of working directory in function `Edit-PocsConfig` and `Get-PocsConfig` 
 
 ## [0.4.7](https://github.com/wbrandenburger/PSPocs/tree/0.4.7) (2019-09-22)
 
